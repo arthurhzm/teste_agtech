@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:teste_agetch/models/customer_model.dart';
+import 'package:teste_agetch/screens/add_customer_screen.dart';
 import 'package:teste_agetch/services/customer_service.dart';
 
 class CustomersScreen extends StatefulWidget {
@@ -33,6 +35,7 @@ class _CustomersScreenState extends State<CustomersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
         onPressed: () => {Navigator.pushNamed(context, '/add-customer')},
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
@@ -54,6 +57,29 @@ class _CustomersScreenState extends State<CustomersScreen> {
                       Text('Cliente ${customers[index]['name']}'),
                       SizedBox(height: 20),
                       Text('Email: ${customers[index]['email']}'),
+                      ElevatedButton(
+                        onPressed: () {
+                          final customer = CustomerModel(
+                            name: customers[index]['name'],
+                            email: customers[index]['email'],
+                          );
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => AddCustomerScreen(
+                                    existingCustomer: customer,
+                                  ),
+                            ),
+                          ).then((_) {
+                            // setState(() {
+                            //   customers = _customerService.getAllCustomers();
+                            // });
+                          });
+                        },
+                        child: const Text('Editar'),
+                      ),
                       ElevatedButton(
                         onPressed:
                             () => _deleteCustomer(customers[index]['email']),

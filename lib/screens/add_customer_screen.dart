@@ -3,7 +3,8 @@ import 'package:teste_agetch/models/customer_model.dart';
 import 'package:teste_agetch/services/customer_service.dart';
 
 class AddCustomerScreen extends StatefulWidget {
-  const AddCustomerScreen({super.key});
+  const AddCustomerScreen({super.key, this.existingCustomer});
+  final CustomerModel? existingCustomer;
 
   @override
   State<AddCustomerScreen> createState() => _AddCustomerScreenState();
@@ -24,6 +25,16 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
       Navigator.pushNamed(context, '/customers');
     } catch (e) {
       debugPrint("Não foi possível cadastrar o cliente. Dados -> $customer");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.existingCustomer != null) {
+      _nameController.text = widget.existingCustomer!.name;
+      _emailContoller.text = widget.existingCustomer!.email;
     }
   }
 

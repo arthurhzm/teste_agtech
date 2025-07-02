@@ -7,11 +7,27 @@ class CustomerService {
   CustomerService({FirebaseFirestore? db})
     : _db = db ?? FirebaseFirestore.instance;
 
-  Future createCustomer(CustomerModel model) async {
+  Future putCustomer(CustomerModel model, String? previousEmail) async {
     try {
-      await _db.collection('customers').add(model.toJson());
+      print(model.toJson());
+      if (previousEmail != null) {
+        _db
+            .collection('customers')
+            .where("email", isEqualTo: previousEmail)
+            .get()
+            .then((snapshot) {
+              for (var docSnapshot in snapshot.docs) {
+                _db
+                    .collection('customers')
+                    .doc(docSnapshot.id)
+                    .update(model.toJson());
+              }
+            });
+      } else {
+        await _db.collection('customers').add(model.toJson());
+      }
     } catch (e) {
-      debugPrint("Ocorreu um erro no Firebase ao tentar salvar o cliente");
+      debugPrint("Erro ao salvar cliente: $e");
     }
   }
 
@@ -31,13 +47,14 @@ class CustomerService {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getAllCustomers() async {
+  Future<List<CustomerModel>> getAllCustomers() async {
     try {
-      return await _db.collection('customers').get().then((snapshot) {
-        return snapshot.docs.map((doc) => doc.data()).toList();
-      });
+      final snapshot = await _db.collection('customers').get();
+      return snapshot.docs
+          .map((doc) => CustomerModel.fromJson(doc.data(), doc.id))
+          .toList();
     } catch (e) {
-      print('Error getting user swipes: $e');
+      print('Erro ao buscar clientes: $e');
       return [];
     }
   }

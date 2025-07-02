@@ -15,13 +15,19 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
   final _emailContoller = TextEditingController();
   final CustomerService _customerService = CustomerService();
 
-  Future _createCustomer() async {
+  Future _putCustomer() async {
     final CustomerModel customer = CustomerModel(
+      id: widget.existingCustomer?.id,
       name: _nameController.text.trim(),
       email: _emailContoller.text.trim(),
     );
+
     try {
-      await _customerService.createCustomer(customer);
+      print(widget.existingCustomer != null);
+      await _customerService.putCustomer(
+        customer,
+        widget.existingCustomer?.email,
+      );
       Navigator.pushNamed(context, '/customers');
     } catch (e) {
       debugPrint("Não foi possível cadastrar o cliente. Dados -> $customer");
@@ -53,10 +59,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
             controller: _emailContoller,
             decoration: const InputDecoration(labelText: 'Email'),
           ),
-          ElevatedButton(
-            onPressed: _createCustomer,
-            child: const Text('Salvar'),
-          ),
+          ElevatedButton(onPressed: _putCustomer, child: const Text('Salvar')),
         ],
       ),
     );

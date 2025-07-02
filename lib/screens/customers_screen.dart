@@ -12,7 +12,7 @@ class CustomersScreen extends StatefulWidget {
 
 class _CustomersScreenState extends State<CustomersScreen> {
   final CustomerService _customerService = CustomerService();
-  late Future<List<Map<String, dynamic>>> customers;
+  late Future<List<CustomerModel>> customers;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _CustomersScreenState extends State<CustomersScreen> {
         child: const Icon(Icons.add),
         onPressed: () => {Navigator.pushNamed(context, '/add-customer')},
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
+      body: FutureBuilder<List<CustomerModel>>(
         future: customers,
         builder: (BuildContext context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -54,14 +54,14 @@ class _CustomersScreenState extends State<CustomersScreen> {
                   height: 50,
                   child: Row(
                     children: [
-                      Text('Cliente ${customers[index]['name']}'),
+                      Text('Cliente ${customers[index].name}'),
                       SizedBox(height: 20),
-                      Text('Email: ${customers[index]['email']}'),
+                      Text('Email: ${customers[index].email}'),
                       ElevatedButton(
                         onPressed: () {
                           final customer = CustomerModel(
-                            name: customers[index]['name'],
-                            email: customers[index]['email'],
+                            name: customers[index].name,
+                            email: customers[index].email,
                           );
 
                           Navigator.push(
@@ -82,7 +82,7 @@ class _CustomersScreenState extends State<CustomersScreen> {
                       ),
                       ElevatedButton(
                         onPressed:
-                            () => _deleteCustomer(customers[index]['email']),
+                            () => _deleteCustomer(customers[index].email),
                         child: const Text('Excluir'),
                       ),
                       //ações

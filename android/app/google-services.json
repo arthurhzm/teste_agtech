@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "352758614551",
+    "project_id": "teste-agtech",
+    "storage_bucket": "teste-agtech.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352758614551:android:037bfa7c3ae024cfa32a52",
+        "android_client_info": {
+          "package_name": "com.example.teste_agetch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABqjYRhncQ0uhZ1qp5lNt5T5DqIxaKAfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352758614551:android:08cfd4dddea52ca7a32a52",
+        "android_client_info": {
+          "package_name": "com.testeagtech.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABqjYRhncQ0uhZ1qp5lNt5T5DqIxaKAfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

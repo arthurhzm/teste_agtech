@@ -8,10 +8,17 @@ class AddCustomerScreen extends StatefulWidget {
 }
 
 class _AddCustomerScreenState extends State<AddCustomerScreen> {
+  final _nameController = TextEditingController();
+  final _emailContoller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ,
-    )
+      appBar: AppBar(title: const Text('Cadastrar/Editar clientes')),
+      body: Column(children: [
+          
+        ],
+      ),
+    );
   }
 }

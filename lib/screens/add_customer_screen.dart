@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:teste_agetch/models/customer_model.dart';
+import 'package:teste_agetch/services/customer_service.dart';
 
 class AddCustomerScreen extends StatefulWidget {
   const AddCustomerScreen({super.key});
@@ -10,13 +12,40 @@ class AddCustomerScreen extends StatefulWidget {
 class _AddCustomerScreenState extends State<AddCustomerScreen> {
   final _nameController = TextEditingController();
   final _emailContoller = TextEditingController();
+  final CustomerService _customerService = CustomerService();
+
+  Future _createCustomer() async {
+    final CustomerModel customer = CustomerModel(
+      name: _nameController.text.trim(),
+      email: _emailContoller.text.trim(),
+    );
+    try {
+      await _customerService.createCustomer(customer);
+      Navigator.pushNamed(context, '/customers');
+    } catch (e) {
+      debugPrint("Não foi possível cadastrar o cliente. Dados -> $customer");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Cadastrar/Editar clientes')),
-      body: Column(children: [
-          
+      body: Column(
+        children: [
+          TextField(
+            controller: _nameController,
+            decoration: const InputDecoration(labelText: 'Nome'),
+          ),
+          const SizedBox(height: 20),
+          TextField(
+            controller: _emailContoller,
+            decoration: const InputDecoration(labelText: 'Email'),
+          ),
+          ElevatedButton(
+            onPressed: _createCustomer,
+            child: const Text('Salvar'),
+          ),
         ],
       ),
     );
